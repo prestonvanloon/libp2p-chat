@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["chat.go"],
+    importpath = "github.com/prestonvanloon/libp2p-demo/chat",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_libp2p_go_libp2p//p2p/host/basic:go_default_library",
+        "@com_github_libp2p_go_libp2p_crypto//:go_default_library",
+        "@com_github_libp2p_go_libp2p_host//:go_default_library",
+        "@com_github_libp2p_go_libp2p_net//:go_default_library",
+        "@com_github_libp2p_go_libp2p_peer//:go_default_library",
+        "@com_github_libp2p_go_libp2p_peerstore//:go_default_library",
+        "@com_github_libp2p_go_libp2p_swarm//:go_default_library",
+        "@com_github_multiformats_go_multiaddr//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "chat",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
