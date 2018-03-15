@@ -476,6 +476,6 @@ go_repository(
 # depended on by com_github_gxed_eventfd
 go_repository(
     name = "com_github_gxed_goendian",
-    importpath = "github.com/gxed/goendian",
+    importpath = "github.com/gxed/GoEndian",
     commit = "0f5c6873267e5abf306ffcdfcfa4bf77517ef4a7",
 )
