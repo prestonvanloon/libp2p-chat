@@ -1,99 +1,44 @@
-/*
-*
-* The MIT License (MIT)
-*
-* Copyright (c) 2014 Juan Batiz-Benet
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*
-* This program demonstrate a simple chat application using p2p communication.
-*
- */
-
 package main
 
 import (
 	"bufio"
 	"context"
-	"crypto/rand"
 	"flag"
 	"fmt"
-	"io"
 	"log"
-	mrand "math/rand"
 	"os"
+	"time"
 
-	"github.com/libp2p/go-libp2p-crypto"
-	"github.com/libp2p/go-libp2p-host"
-	"github.com/libp2p/go-libp2p-net"
-	"github.com/libp2p/go-libp2p-peer"
-	"github.com/libp2p/go-libp2p-peerstore"
-	"github.com/libp2p/go-libp2p-swarm"
-	"github.com/libp2p/go-libp2p/p2p/host/basic"
-	"github.com/multiformats/go-multiaddr"
+	cid "github.com/ipfs/go-cid"
+	iaddr "github.com/ipfs/go-ipfs-addr"
+	libp2p "github.com/libp2p/go-libp2p"
+	dht "github.com/libp2p/go-libp2p-kad-dht"
+	inet "github.com/libp2p/go-libp2p-net"
+	pstore "github.com/libp2p/go-libp2p-peerstore"
+	mh "github.com/multiformats/go-multihash"
 )
 
-/*
-* addAddrToPeerstore parses a peer multiaddress and adds
-* it to the given host's peerstore, so it knows how to
-* contact it. It returns the peer ID of the remote peer.
-* @credit examples/http-proxy/proxy.go
- */
-func addAddrToPeerstore(h host.Host, addr string) peer.ID {
-	// The following code extracts target's the peer ID from the
-	// given multiaddress
-	ipfsaddr, err := multiaddr.NewMultiaddr(addr)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	pid, err := ipfsaddr.ValueForProtocol(multiaddr.P_IPFS)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	peerid, err := peer.IDB58Decode(pid)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	// Decapsulate the /ipfs/<peerID> part from the target
-	// /ip4/<a.b.c.d>/ipfs/<peer> becomes /ip4/<a.b.c.d>
-	targetPeerAddr, _ := multiaddr.NewMultiaddr(
-		fmt.Sprintf("/ipfs/%s", peer.IDB58Encode(peerid)))
-	targetAddr := ipfsaddr.Decapsulate(targetPeerAddr)
-
-	// We have a peer ID and a targetAddr so we add
-	// it to the peerstore so LibP2P knows how to contact it
-	h.Peerstore().AddAddr(peerid, targetAddr, peerstore.PermanentAddrTTL)
-	return peerid
+// IPFS bootstrap nodes. Used to find other peers in the network.
+var bootstrapPeers = []string{
+	"/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
+	"/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM",
+	"/ip4/104.236.76.40/tcp/4001/ipfs/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64",
+	"/ip4/128.199.219.111/tcp/4001/ipfs/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu",
+	"/ip4/178.62.158.247/tcp/4001/ipfs/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
 }
 
-func handleStream(s net.Stream) {
+var rendezvous = "meet me here"
+
+func handleStream(stream inet.Stream) {
 	log.Println("Got a new stream!")
 
 	// Create a buffer stream for non blocking read and write.
-	rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
+	rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
 
 	go readData(rw)
 	go writeData(rw)
 
-	// stream 's' will stay open until you close it (or the other side closes it).
+	// 'stream' will stay open until you close it (or the other side closes it).
 }
 func readData(rw *bufio.ReadWriter) {
 	for {
@@ -125,107 +70,98 @@ func writeData(rw *bufio.ReadWriter) {
 		rw.WriteString(fmt.Sprintf("%s\n", sendData))
 		rw.Flush()
 	}
-
 }
 
 func main() {
-
-	sourcePort := flag.Int("sp", 0, "Source port number")
-	dest := flag.String("d", "", "Dest MultiAddr String")
-	help := flag.Bool("help", false, "Display Help")
-	debug := flag.Bool("debug", true, "Debug generated same node id on every execution.")
-
+	help := flag.Bool("h", false, "Display Help")
+	rendezvousString := flag.String("r", rendezvous, "Unique string to identify group of nodes. Share this with your friends to let them connect with you")
 	flag.Parse()
 
 	if *help {
 		fmt.Printf("This program demonstrates a simple p2p chat application using libp2p\n\n")
-		fmt.Printf("Usage: Run './chat -sp <SOURCE_PORT>' where <SOURCE_PORT> can be any port number. Now run './chat -d <MULTIADDR>' where <MULTIADDR> is multiaddress of previous listener host.\n")
+		fmt.Printf("Usage: Run './chat in two different terminals. Let them connect to the bootstrap nodes, announce themselves and connect to the peers\n")
 
 		os.Exit(0)
 	}
 
-	// If debug is enabled used constant random source else cryptographic randomness.
-	var r io.Reader
-	if *debug {
-		// Constant random source. This will always generate the same host ID on multiple execution.
-		// Don't do this in production code.
-		r = mrand.New(mrand.NewSource(int64(*sourcePort)))
-	} else {
-		r = rand.Reader
-	}
+	ctx := context.Background()
 
-	// Creates a new RSA key pair for this host
-	prvKey, pubKey, err := crypto.GenerateKeyPairWithReader(crypto.RSA, 2048, r)
-
+	// libp2p.New constructs a new libp2p Host.
+	// Other options can be added here.
+	host, err := libp2p.New(ctx, libp2p.EnableRelay())
 	if err != nil {
 		panic(err)
 	}
 
-	// Getting host ID from public key.
-	// host ID is the hash of public key
-	nodeID, _ := peer.IDFromPublicKey(pubKey)
+	// Set a function as stream handler.
+	// This function is called when a peer initiate a connection and starts a stream with this peer.
+	host.SetStreamHandler("/chat/1.1.0", handleStream)
 
-	// 0.0.0.0 will listen on any interface device
-	sourceMultiAddr, _ := multiaddr.NewMultiaddr(fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", *sourcePort))
-
-	// Adding self to the peerstore.
-	ps := peerstore.NewPeerstore()
-	ps.AddPrivKey(nodeID, prvKey)
-	ps.AddPubKey(nodeID, pubKey)
-
-	// Creating a new Swarm network.
-	network, err := swarm.NewNetwork(context.Background(), []multiaddr.Multiaddr{sourceMultiAddr}, nodeID, ps, nil)
-
+	kadDht, err := dht.New(ctx, host)
 	if err != nil {
 		panic(err)
 	}
 
-	// NewHost constructs a new *BasicHost and activates it by attaching its
-	// stream and connection handlers to the given inet.Network (network).
-	// Other options like NATManager can also be added here.
-	// See docs: https://godoc.org/github.com/libp2p/go-libp2p/p2p/host/basic#HostOpts
-	host := basichost.New(network)
+	// Let's connect to the bootstrap nodes first. They will tell us about the other nodes in the network.
+	for _, peerAddr := range bootstrapPeers {
+		addr, _ := iaddr.ParseString(peerAddr)
+		peerinfo, _ := pstore.InfoFromP2pAddr(addr.Multiaddr())
 
-	if *dest == "" {
-		// Set a function as stream handler.
-		// This function  is called when a peer initiate a connection and starts a stream with this peer.
-		// Only applicable on the receiving side.
-		host.SetStreamHandler("/chat/1.0.0", handleStream)
+		if err := host.Connect(ctx, *peerinfo); err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("Connection established with bootstrap node: ", *peerinfo)
+		}
+	}
 
-		fmt.Printf("Run './chat -d /ip4/127.0.0.1/tcp/%d/ipfs/%s' on another console.\n You can replace 127.0.0.1 with public IP as well.\n", *sourcePort, host.ID().Pretty())
-		fmt.Printf("\nWaiting for incoming connection\n\n")
-		// Hang forever
-		<-make(chan struct{})
+	// We use a rendezvous point "meet me here" to announce our location.
+	// This is like telling your friends to meet you at the Eiffel Tower.
+	v1b := cid.V1Builder{Codec: cid.Raw, MhType: mh.SHA2_256}
+	rendezvousPoint, _ := v1b.Sum([]byte(*rendezvousString))
 
-	} else {
+	fmt.Println("announcing ourselves...")
+	tctx, cancel := context.WithTimeout(ctx, time.Second*10)
+	defer cancel()
+	if err := kadDht.Provide(tctx, rendezvousPoint, true); err != nil {
+		panic(err)
+	}
 
-		// Add destination peer multiaddress in the peerstore.
-		// This will be used during connection and stream creation by libp2p.
-		peerID := addAddrToPeerstore(host, *dest)
+	// Now, look for others who have announced
+	// This is like your friend telling you the location to meet you.
+	// 'FindProviders' will return 'PeerInfo' of all the peers which
+	// have 'Provide' or announced themselves previously.
+	fmt.Println("searching for other peers...")
+	tctx, cancel = context.WithTimeout(ctx, time.Second*10)
+	defer cancel()
+	peers, err := kadDht.FindProviders(tctx, rendezvousPoint)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Found %d peers!\n", len(peers))
 
-		fmt.Println("This node's multiaddress: ")
-		// IP will be 0.0.0.0 (listen on any interface) and port will be 0 (choose one for me).
-		// Although this node will not listen for any connection. It will just initiate a connect with
-		// one of its peer and use that stream to communicate.
-		fmt.Printf("%s/ipfs/%s\n", sourceMultiAddr, host.ID().Pretty())
+	for _, p := range peers {
+		fmt.Println("Peer: ", p)
+	}
 
-		// Start a stream with peer with peer Id: 'peerId'.
-		// Multiaddress of the destination peer is fetched from the peerstore using 'peerId'.
-		s, err := host.NewStream(context.Background(), peerID, "/chat/1.0.0")
-
-		if err != nil {
-			panic(err)
+	for _, p := range peers {
+		if p.ID == host.ID() || len(p.Addrs) == 0 {
+			// No sense connecting to ourselves or if addrs are not available
+			continue
 		}
 
-		// Create a buffered stream so that read and writes are non blocking.
-		rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
+		stream, err := host.NewStream(ctx, p.ID, "/chat/1.1.0")
 
-		// Create a thread to read and write data.
-		go writeData(rw)
-		go readData(rw)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
 
-		// Hang forever.
-		select {}
+			go writeData(rw)
+			go readData(rw)
+		}
 
+		fmt.Println("Connected to: ", p)
 	}
+
+	select {}
 }
