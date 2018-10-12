@@ -42,36 +42,14 @@ import (
 	"github.com/libp2p/go-libp2p"
 
 	"github.com/libp2p/go-libp2p-crypto"
-	"github.com/libp2p/go-libp2p-host"
 	"github.com/libp2p/go-libp2p-net"
-	"github.com/libp2p/go-libp2p-peer"
 	"github.com/libp2p/go-libp2p-peerstore"
 	"github.com/multiformats/go-multiaddr"
 )
 
-/*
-* addAddrToPeerstore parses a peer multiaddress and adds
-* it to the given host's peerstore, so it knows how to
-* contact it. It returns the peer ID of the remote peer.
-* @credit examples/http-proxy/proxy.go
- */
-func addAddrToPeerstore(h host.Host, addr string) peer.ID {
-	maddr, err := multiaddr.NewMultiaddr(addr)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	info, err := peerstore.InfoFromP2pAddr(maddr)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	h.Peerstore().AddAddrs(info.ID, info.Addrs, peerstore.PermanentAddrTTL)
-	return info.ID
-}
-
 func handleStream(s net.Stream) {
-	log.Println("Got a new stream!")
+
+	log.Printf("Got a new stream from %s via %s", s.Conn().RemotePeer().Pretty(), s.Conn().RemoteMultiaddr().String())
 
 	// Create a buffer stream for non blocking read and write.
 	rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
