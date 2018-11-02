@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["dht.go"],
+    importpath = "github.com/prestonvanloon/libp2p-chat/dht",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_ipfs_go_datastore//:go_default_library",
+        "@com_github_ipfs_go_datastore//sync:go_default_library",
+        "@com_github_libp2p_go_libp2p//:go_default_library",
+        "@com_github_libp2p_go_libp2p_kad_dht//:go_default_library",
+        "@com_github_multiformats_go_multiaddr//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "dht",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
