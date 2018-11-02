@@ -1,12 +1,16 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
-    srcs = ["chat.go"],
+    srcs = [
+        "add_relay.go",
+        "chat.go",
+    ],
     importpath = "github.com/prestonvanloon/libp2p-chat/chat",
     visibility = ["//visibility:private"],
     deps = [
         "@com_github_libp2p_go_libp2p//:go_default_library",
+        "@com_github_libp2p_go_libp2p//config:go_default_library",
         "@com_github_libp2p_go_libp2p_crypto//:go_default_library",
         "@com_github_libp2p_go_libp2p_net//:go_default_library",
         "@com_github_libp2p_go_libp2p_peerstore//:go_default_library",
@@ -18,4 +22,11 @@ go_binary(
     name = "chat",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["add_relay_test.go"],
+    embed = [":go_default_library"],
+    deps = ["@com_github_multiformats_go_multiaddr//:go_default_library"],
 )

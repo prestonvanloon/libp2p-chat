@@ -137,6 +137,7 @@ func main() {
 		libp2p.ListenAddrs(sourceMultiAddr),
 		libp2p.Identity(prvKey),
 		libp2p.EnableRelay(),
+		libp2p.AddrsFactory(addRelayAddrs(*relay, true /*relayOnly*/)),
 	)
 
 	if err != nil {
