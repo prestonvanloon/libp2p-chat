@@ -21,10 +21,6 @@ func addRelayAddrs(relay string, relayOnly bool) config.AddrsFactory {
 			if a.String() == "/p2p-circuit" {
 				continue
 			}
-			//			info, err := ps.InfoFromP2pAddr(a)
-			//			if err != nil {
-			//				panic(err) // TODO: handle
-			//			}
 			relayAddr, err := ma.NewMultiaddr(relay + "/p2p-circuit" + a.String())
 			if err != nil {
 				panic(err) // TODO: handle
