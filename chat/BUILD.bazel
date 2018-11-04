@@ -52,7 +52,7 @@ container_push(
     format = "Docker",
     image = ":image",
     registry = "gcr.io",
-    repository = "prysmaticlabs/chat/dht",
+    repository = "prysmaticlabs/chat/chat",
     tag = "latest",
     tags = ["manual"],
 )

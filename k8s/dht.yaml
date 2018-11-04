@@ -27,6 +27,8 @@ spec:
           ports:
           - containerPort: 4001
             name: dht
+            protocol: TCP
+            hostPort: 5000
           args:
             - "--private=$(PRIVATE_KEY)"
           env:
@@ -43,7 +45,9 @@ metadata:
 spec:
   selector:
     name: dht
+  type: NodePort
   ports:
   - protocol: TCP
-    port: 4000
+    port: 4001
     targetPort: 4001
+    nodePort: 30100

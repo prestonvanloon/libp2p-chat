@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"crypto/rand"
+	"flag"
 	"fmt"
 
 	libp2p "github.com/libp2p/go-libp2p"
@@ -11,20 +11,36 @@ import (
 	multiaddr "github.com/multiformats/go-multiaddr"
 )
 
+var (
+	privateKey = flag.String("private", "", "Private key to use for peer ID")
+)
+
 func main() {
-	prvKey, _, err := crypto.GenerateKeyPairWithReader(crypto.RSA, 2048, rand.Reader)
-	if err != nil {
-		panic(err)
-	}
+	flag.Parse()
 
 	port := 6660
 	srcMAddr, _ := multiaddr.NewMultiaddr(fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", port))
 
+	opts := []libp2p.Option{
+		libp2p.EnableRelay(circuit.OptHop),
+		libp2p.ListenAddrs(srcMAddr),
+	}
+
+	if *privateKey != "" {
+		b, err := crypto.ConfigDecodeKey(*privateKey)
+		if err != nil {
+			panic(err)
+		}
+		pk, err := crypto.UnmarshalPrivateKey(b)
+		if err != nil {
+			panic(err)
+		}
+		opts = append(opts, libp2p.Identity(pk))
+	}
+
 	h, err := libp2p.New(
 		context.Background(),
-		libp2p.EnableRelay(circuit.OptHop),
-		libp2p.Identity(prvKey),
-		libp2p.ListenAddrs(srcMAddr),
+		opts...,
 	)
 	if err != nil {
 		panic(err)

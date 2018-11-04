@@ -57,6 +57,7 @@ import (
 )
 
 var outgoingStreams []peer.ID
+var tellTheTime = flag.Bool("tell_time", false, "For each stream, tell the time every 5 seconds")
 
 func handleStream(s net.Stream) {
 
@@ -89,11 +90,23 @@ func readData(rw *bufio.ReadWriter) {
 func writeData(rw *bufio.ReadWriter) {
 	stdReader := bufio.NewReader(os.Stdin)
 
+	if *tellTheTime {
+		go func() {
+			for {
+				rw.WriteString(fmt.Sprintf("The current time in k8s is %s", time.Now()))
+				time.Sleep(5 * time.Second)
+			}
+		}()
+	}
+
 	for {
 		fmt.Print("> ")
 		sendData, err := stdReader.ReadString('\n')
 
 		if err != nil {
+			if err == io.EOF {
+				break
+			}
 			panic(err)
 		}
 
@@ -111,7 +124,6 @@ func main() {
 	relay := flag.String("relay", "", "Relay node to connect")
 	dhtAddr := flag.String("dht", "", "DHT node to retrieve peers")
 	v := flag.Bool("v", false, "Verbose logging (debug level)")
-
 	flag.Parse()
 
 	if *v {
