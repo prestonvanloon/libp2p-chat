@@ -35,3 +35,15 @@ spec:
                 secretKeyRef:
                   name: dht-pk
                   key: private
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: dht
+spec:
+  selector:
+    name: dht
+  ports:
+  - protocol: TCP
+    port: 4000
+    targetPort: 4001
