@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 
 	ds "github.com/ipfs/go-datastore"
 	dsync "github.com/ipfs/go-datastore/sync"
 	logging "github.com/ipfs/go-log"
 	libp2p "github.com/libp2p/go-libp2p"
+	crypto "github.com/libp2p/go-libp2p-crypto"
 	kaddht "github.com/libp2p/go-libp2p-kad-dht"
 	ma "github.com/multiformats/go-multiaddr"
 )
@@ -16,7 +18,13 @@ func init() {
 	logging.SetDebugLogging()
 }
 
+var (
+	privateKey = flag.String("private", "", "Private key to use for peer ID")
+)
+
 func main() {
+	flag.Parse()
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -26,6 +34,18 @@ func main() {
 	}
 	opts := []libp2p.Option{
 		libp2p.ListenAddrs(listen),
+	}
+
+	if *privateKey != "" {
+		b, err := crypto.ConfigDecodeKey(*privateKey)
+		if err != nil {
+			panic(err)
+		}
+		pk, err := crypto.UnmarshalPrivateKey(b)
+		if err != nil {
+			panic(err)
+		}
+		opts = append(opts, libp2p.Identity(pk))
 	}
 
 	host, err := libp2p.New(ctx, opts...)

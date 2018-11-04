@@ -1,4 +1,6 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 go_library(
     name = "go_default_library",
@@ -38,4 +40,19 @@ go_test(
     srcs = ["add_relay_test.go"],
     embed = [":go_default_library"],
     deps = ["@com_github_multiformats_go_multiaddr//:go_default_library"],
+)
+
+go_image(
+    name = "image",
+    embed = [":go_default_library"],
+)
+
+container_push(
+    name = "push_image",
+    format = "Docker",
+    image = ":image",
+    registry = "gcr.io",
+    repository = "prysmaticlabs/chat/dht",
+    tag = "latest",
+    tags = ["manual"],
 )

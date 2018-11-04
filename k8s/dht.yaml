@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dht
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dht
+  template:
+    metadata:
+      labels:
+        name: dht
+    spec:
+      containers:
+        - name: dht
+          image: gcr.io/prysmaticlabs/chat/dht:latest
+          ports:
+          - containerPort: 4001
+            name: dht
