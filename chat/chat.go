@@ -69,6 +69,17 @@ func handleStream(s net.Stream) {
 	go readData(rw)
 	go writeData(rw)
 
+	if *tellTheTime {
+		log.Println("Sending current time to stream")
+		go func() {
+			for {
+				rw.WriteString(fmt.Sprintf("The current time in k8s is %s\n", time.Now()))
+				rw.Flush()
+				log.Printf("sent time")
+				time.Sleep(5 * time.Second)
+			}
+		}()
+	}
 	// stream 's' will stay open until you close it (or the other side closes it).
 }
 func readData(rw *bufio.ReadWriter) {
@@ -89,15 +100,6 @@ func readData(rw *bufio.ReadWriter) {
 
 func writeData(rw *bufio.ReadWriter) {
 	stdReader := bufio.NewReader(os.Stdin)
-
-	if *tellTheTime {
-		go func() {
-			for {
-				rw.WriteString(fmt.Sprintf("The current time in k8s is %s", time.Now()))
-				time.Sleep(5 * time.Second)
-			}
-		}()
-	}
 
 	for {
 		fmt.Print("> ")

@@ -30,6 +30,7 @@ spec:
             protocol: TCP
           args:
             - "--private=$(PRIVATE_KEY)"
+            - "--v"
           env:
             - name: PRIVATE_KEY
               valueFrom:

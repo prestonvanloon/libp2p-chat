@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 
+	logger "github.com/ipfs/go-log"
 	libp2p "github.com/libp2p/go-libp2p"
 	circuit "github.com/libp2p/go-libp2p-circuit"
 	crypto "github.com/libp2p/go-libp2p-crypto"
@@ -13,10 +14,16 @@ import (
 
 var (
 	privateKey = flag.String("private", "", "Private key to use for peer ID")
+	debug      = flag.Bool("v", false, "Verbose logging")
 )
 
 func main() {
 	flag.Parse()
+
+	if *debug {
+		logger.SetDebugLogging()
+		fmt.Println("Verbose logging on")
+	}
 
 	port := 6660
 	srcMAddr, _ := multiaddr.NewMultiaddr(fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", port))
@@ -46,7 +53,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("Relay available: /ip4/127.0.0.1/tcp/%v/p2p/%s\n", port, h.ID().Pretty())
+	fmt.Printf("Relay available: /ip4/0.0.0.0/tcp/%v/p2p/%s\n", port, h.ID().Pretty())
 
 	// Hang forever.
 	select {}
