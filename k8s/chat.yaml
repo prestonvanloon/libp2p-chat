@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: chat
+  template:
+    metadata:
+      labels:
+        name: chat
+    spec:
+      containers:
+      - name: chat
+        image: gcr.io/prysmaticlabs/chat/chat:latest
+        args:
+          - "-dht=/ip4/$(DHT_SERVICE_HOST)/tcp/$(DHT_SERVICE_PORT)/p2p/Qmea94pNZRA9mfSshFN8LnCDdqSvfmjwFo3kReawfkJG4f"
+          - "-relay=/ip4/192.168.99.100/tcp/30101/p2p/QmXmXAPKiT7pDpkfRTupPjojutAPwyunwZaVKBPpoKUNMr"
+          - "-tell_time"
+          - "-v"

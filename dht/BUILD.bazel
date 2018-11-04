@@ -1,44 +1,27 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 go_library(
     name = "go_default_library",
-    srcs = [
-        "add_relay.go",
-        "chat.go",
-        "contains.go",
-    ],
-    importpath = "github.com/prestonvanloon/libp2p-chat/chat",
+    srcs = ["dht.go"],
+    importpath = "github.com/prestonvanloon/libp2p-chat/dht",
     visibility = ["//visibility:private"],
     deps = [
-        "//utils:go_default_library",
         "@com_github_ipfs_go_datastore//:go_default_library",
         "@com_github_ipfs_go_datastore//sync:go_default_library",
         "@com_github_ipfs_go_log//:go_default_library",
         "@com_github_libp2p_go_libp2p//:go_default_library",
-        "@com_github_libp2p_go_libp2p//config:go_default_library",
-        "@com_github_libp2p_go_libp2p//p2p/host/routed:go_default_library",
         "@com_github_libp2p_go_libp2p_crypto//:go_default_library",
-        "@com_github_libp2p_go_libp2p_host//:go_default_library",
         "@com_github_libp2p_go_libp2p_kad_dht//:go_default_library",
-        "@com_github_libp2p_go_libp2p_net//:go_default_library",
-        "@com_github_libp2p_go_libp2p_peerstore//:go_default_library",
         "@com_github_multiformats_go_multiaddr//:go_default_library",
     ],
 )
 
 go_binary(
-    name = "chat",
+    name = "dht",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
-)
-
-go_test(
-    name = "go_default_test",
-    srcs = ["add_relay_test.go"],
-    embed = [":go_default_library"],
-    deps = ["@com_github_multiformats_go_multiaddr//:go_default_library"],
 )
 
 go_image(
@@ -51,7 +34,7 @@ container_push(
     format = "Docker",
     image = ":image",
     registry = "gcr.io",
-    repository = "prysmaticlabs/chat/chat",
+    repository = "prysmaticlabs/chat/dht",
     tag = "latest",
     tags = ["manual"],
 )

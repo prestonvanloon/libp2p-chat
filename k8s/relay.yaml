@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: relay-pk
+type: Opaque
+data: 
+  # Peer ID: QmXmXAPKiT7pDpkfRTupPjojutAPwyunwZaVKBPpoKUNMr 
+  private: Q0FBU3FBa3dnZ1NrQWdFQUFvSUJBUURpNVVQQTdYMGpJTWZTSmVJNzFjN0t3Szl4L2NRejZJNUtWYkdGbEEyNXFUa2UrRWxsL1hkRG1mRkdEaSt2eDNkMmN5NmpMdDgzd3k5eUVzWnhzZCtVbXNUcFkyR2dFdVYvekpPL09jdm5wNHBCN3I3UHpJWVBYR3U0b01Ka005cG9LRVFoR3VXMVhJdzlFWUtqMkZyLzYvL3FLMFNGTGc3WXB2d1hpZ2hycS9CZVh0Q3VtUGNtclhUVjBGL3VnNTdiamg1M0s4c2hTQkNmUFlXNE5Lbk96NlM2c1c4eDNlREg1d29lVWE3dWtUOUg4Z3NSMG9sVnc2VHB5djVzNHhUdXpKckU5ZWpOejF2QWdhSG1jSHN0YlJ2L20rREhaOTZCeEN6cmEvdHVyUnJXTS93ekU4MEpyTnBVbm54aFNLd3V6RTdOZDhhUkQ1bFhkUm1BMEhQYkFnTUJBQUVDZ2dFQWR1L2JUbHl2aGlSKzJvZ0ZTWHhRaERQeFEvM1VSYW1ZUFJzaWpYVUlwTlF5SHl2anZkVGFHZE91aUJ5VG5yOGV2amF1c2RlMkp4TG40aEk1ZUF2WHVaeFBzRS9xTXZEMDRNTXFoOGtTUEFLMUZNN0RzMFh3MkVpSUp5WU9BRnkyRm5kVkQwMThNRSt0SzYzc0gxc2dpSnI3Y1pMd3ZpZGduTzBicEhNMDZzc2Y2YVcvZGtROXo1a1lYZXZjRmlTUWloQ2JSN004UTBxcmVsL011VnhQMVpGVG9UQitMVnFlT2tkR1A3U0hVSmFKUUFhbmpRUlRrY1QwaUxma2ZYd2R2MVNBbGhnN1pFeFJDUVVpY1Z5Qi9HK0xCSU54VS91c1huL3BJN3BvZktMWHdieDJvRXdmRzNpQVk0STdVNzFibWdxQzAxclAxQnN0enpadXhtWnlzUUtCZ1FEMENwSTJsN1FyYklQVEtNMUVFQ0RXVm15YkZDTVJyWGlMY2l2UURFVWtSM1R5Vlk5cmhIbUk1bXg3RTRSV0ovWVlBd2FHRVo5TldqQzY2Q3dXMElqbUtrYVdib2pETkZZRkJMb3FOY2Q5SHN1R1RQMlJKb1RJaGtEdkpFNkFXb0RWT0Nkc2NjMUF5OUNXTE9ONDg5OHRpMmpMS1lKV2VGZy9vNi80WXdTLzFRS0JnUUR1QTVydlIxRmlHekdMcjNSa05nTzFNMEd4OFkzSTFEcjBkQzRNVjdVWEkyYlpiSUpmQmQ1M2g0bjNGNWs4YTdXMmdRYnlCZitpTFNPM041VnF3S3IrK2MxY2dNNWxvdlJ5cXZ0REFJRzl0Z2hSMTByNGxKMG53dUJ2d0o3YmxrbHJxWDVSZ3Z6V3U2NFE0dlhnWjI0OUs4VnN2QXUxdzZkUWtEa1lRZVhzN3dLQmdRRFpORmR5azQ5ZVh0VHRxaEVZRlNyRTJtTUxtOTZpcXp6eEVBc0N2d2tEQXo2Sk9iSE94amZOcXhpK2FsNk11RUNHbXByQjFRbHVOV25OMFRyOGkxcHRVUTlHY05iMHRxNGhCVllVbjQwUVJjcHJuRGJMYS9jZTZxNzhxZG5jejdCL0ZkMnczWkVMck52WDdkZ0FIVDUwTVBKeWNGMTdUTjF1dHVlMk1adFdpUUtCZ1FEWi9DZEwraTlKQU1yUnVmR0pUZ2I3VDJSZGluTm1lU2s5ZGFJdTM2MFU4ZkZpTkFUNjdpOGZuZHozbG45YlhQSmhvYTR3dnRtdk9GUTdtd2FYYkxtdktDMnpDS3ovWE0wd3IvUExHNDIzcUIzYWhxazlIUzhKbVd0Z0xqUFB2TWFsZWVnYzB6Q3BvZDM3elVHUE1tcytUdlpUYmEzejNLdENGN1NTeU5mQnRRS0JnQUNUdjR6eS9DZDB6MXlLTzJha01oWTZGeVV6ckhsVFRyK0t6L2kvUFFJdGpTTW0yK3RWNEVOQnYvVW4zSVRjeEdEZnpFUlhMT2NsczFObWFvZ2lkaHJWL1ZIWWxpQjlrZnhoQWg4U21uSnVab1RrRUZZQm5CdmJRNUN5KzFqQm1valU5QUR1N1BpbWtFQkJlWkZXaU5meTFMZVNvOUVHRzBnZEcybGFFc1RL
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: relay
+  template:
+    metadata:
+      labels:
+        name: relay
+    spec:
+      containers:
+        - name: relay
+          image: gcr.io/prysmaticlabs/chat/relay:latest 
+          ports:
+          - containerPort: 6660
+            name: relay
+            protocol: TCP
+          args:
+            - "--private=$(PRIVATE_KEY)"
+            - "--v"
+          env:
+            - name: PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: relay-pk
+                  key: private
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: relay
+spec:
+  selector:
+    name: relay
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 6660
+    targetPort: 6660
+    nodePort: 30101
