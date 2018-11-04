@@ -3,7 +3,7 @@
 Goals 
 
 - Clients connect via relay [DONE]
-- Clients discover each other in a common DHT via their relay address
+- Clients discover each other in a common DHT via their relay address [DONE]
 
 Example workflow:
 
