@@ -1,6 +1,8 @@
 # Chat 
 
-Goals 
+This is an experiment on connecting clients via relay nodes with a common DHT.
+
+# Goals 
 
 - Clients connect via relay [DONE]
 - Clients discover each other in a common DHT via their relay address [DONE]
