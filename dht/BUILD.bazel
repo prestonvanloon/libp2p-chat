@@ -8,6 +8,7 @@ go_library(
     importpath = "github.com/prestonvanloon/libp2p-chat/dht",
     visibility = ["//visibility:private"],
     deps = [
+        "//common:go_default_library",
         "@com_github_ipfs_go_datastore//:go_default_library",
         "@com_github_ipfs_go_datastore//sync:go_default_library",
         "@com_github_ipfs_go_log//:go_default_library",

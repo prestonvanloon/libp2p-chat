@@ -62,7 +62,7 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_nat",
-    commit = "b82aac8589e138824736b2a9d466981dbce6b0d4",
+    commit = "fe236c4745a2536facac62dc99ec34c56d833d95",
     importpath = "github.com/libp2p/go-libp2p-nat",
 )
 
@@ -92,7 +92,7 @@ go_repository(
 
 go_repository(
     name = "com_github_gogo_protobuf",
-    commit = "e87afe3c25daf6fa321fed3705938e53672b0a3b",
+    commit = "211a54c57504366b3bf4b490fb3c0a5f5b8d290b",
     importpath = "github.com/gogo/protobuf",
 )
 
@@ -116,7 +116,7 @@ go_repository(
 
 go_repository(
     name = "com_github_ipfs_go_log",
-    commit = "53fe9250f3341cda29af5069ae82ff903e0c449a",
+    commit = "de9a213953d6ec0e053b56e9d79800565c3fc9ca",
     importpath = "github.com/ipfs/go-log",
 )
 
@@ -140,7 +140,7 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_addr_util",
-    commit = "94b4c8b41eba1c82140fee9cca456ad13ae81706",
+    commit = "6e2ee01c0ae21694bcc33aaa7d6ce214279134f6",
     importpath = "github.com/libp2p/go-addr-util",
 )
 
@@ -153,49 +153,49 @@ go_repository(
 go_repository(
     name = "com_github_libp2p_go_libp2p_crypto",
     build_file_proto_mode = "disable_global",
-    commit = "d1252f9bfe49590ff7a6381e9f0d4e882b631e28",
+    commit = "3120e9f9526fe05f2d3905961a5e0701b85579d9",
     importpath = "github.com/libp2p/go-libp2p-crypto",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_host",
-    commit = "e758e0ca4ae1107e480c43a22bf91272a5432105",
+    commit = "598b2d31a677b46c40855423f88fd10c122f0309",
     importpath = "github.com/libp2p/go-libp2p-host",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_interface_connmgr",
-    commit = "61a030e46d8f6c82500b0992360d7a5c701d367a",
+    commit = "eb657584a141a641098794301c9ef3fc9f35561d",
     importpath = "github.com/libp2p/go-libp2p-interface-connmgr",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_loggables",
-    commit = "2edffda90e410fab8ca3663511d33b59314d4b07",
+    commit = "024fce320cf7e720445c400721c6fa6d68c9aaa7",
     importpath = "github.com/libp2p/go-libp2p-loggables",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_metrics",
-    commit = "20c0e3fed14ddf84ac8192038accfd393610ed82",
+    commit = "2d5733beaa2a9fdd05ef696d7a734aa61549fb2a",
     importpath = "github.com/libp2p/go-libp2p-metrics",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_net",
-    commit = "22c96766db92ab111e506ebcd9cc6511ed32e553",
+    commit = "abc1a0a5489e49274b8115ddda5661a8a8270818",
     importpath = "github.com/libp2p/go-libp2p-net",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_peer",
-    commit = "dd9b45c0649b38aebe65f98cb460676b4214a42c",
+    commit = "d3df4bca884d7a9c2d350c8120240db3c2b0f2ee",
     importpath = "github.com/libp2p/go-libp2p-peer",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_peerstore",
-    commit = "6295e61c9fd2f13ad159c6241be3b371918045e2",
+    commit = "545f62f160f44613034553f69024f91cef4d0de9",
     importpath = "github.com/libp2p/go-libp2p-peerstore",
 )
 
@@ -213,25 +213,25 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_swarm",
-    commit = "839f88f8de4d0f8300facdcdf7aa2124d020b2b6",
+    commit = "3d9a2ee0562310a6e6973203348ce3d5eea72c71",
     importpath = "github.com/libp2p/go-libp2p-swarm",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_transport",
-    commit = "e6d021be15cb2bfc73fb24d3b16848bc2825bbf6",
+    commit = "2f042b8302ef0c73d8722da9e283c77030c78827",
     importpath = "github.com/libp2p/go-libp2p-transport",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p",
-    commit = "9356373d00ab1aef3e20c8202b682f93799acf78",
+    commit = "3e2dc09212ad570c9173376ca9e3c54ae8a7d394",
     importpath = "github.com/libp2p/go-libp2p",
 )
 
 go_repository(
     name = "com_github_libp2p_go_maddr_filter",
-    commit = "7f7ca1e79c453741adb1cc10d8892b186952e9e1",
+    commit = "9e2c18e714b119399bf9ba45cd26805321bf22b5",
     importpath = "github.com/libp2p/go-maddr-filter",
 )
 
@@ -261,25 +261,25 @@ go_repository(
 
 go_repository(
     name = "com_github_multiformats_go_multiaddr",
-    commit = "393301199b4437234bd500b78bdf9555f6428c18",
+    commit = "ec8630b6b7436b5d7f6c1c2366d3d7214d1b29e2",
     importpath = "github.com/multiformats/go-multiaddr",
 )
 
 go_repository(
     name = "com_github_multiformats_go_multiaddr_dns",
-    commit = "317a9bc842d426da4d878690625babb26d64e73b",
+    commit = "8ad4cb43a93f543bd1449006f12dd8aab1149a42",
     importpath = "github.com/multiformats/go-multiaddr-dns",
 )
 
 go_repository(
     name = "com_github_multiformats_go_multiaddr_net",
-    commit = "5b127b903db6848e085c1c2078840d3401f928ef",
+    commit = "f0af4033635f1241179700537dacdc04f2803df8",
     importpath = "github.com/multiformats/go-multiaddr-net",
 )
 
 go_repository(
     name = "com_github_multiformats_go_multihash",
-    commit = "97cdb562a04c6ef66d8ed40cd62f8fbcddd396d6",
+    commit = "a91e75d03bf4dba801af7b159c8b2aa7b5f47ea8",
     importpath = "github.com/multiformats/go-multihash",
 )
 
@@ -303,7 +303,7 @@ go_repository(
 
 go_repository(
     name = "com_github_whyrusleeping_mafmt",
-    commit = "3b86bcbec8cbb09d205c1492e898ce3d0e81c4d5",
+    commit = "c75a64cef2f64e7d538e6d43a8c58449ba2ab735",
     importpath = "github.com/whyrusleeping/mafmt",
 )
 
@@ -321,13 +321,13 @@ go_repository(
 
 go_repository(
     name = "org_golang_x_net",
-    commit = "c10e9556a7bc0e7c942242b606f0acf024ad5d6a",
+    commit = "10aee181995363b41f712a55844a0dd52ea04646",
     importpath = "golang.org/x/net",
 )
 
 go_repository(
     name = "org_golang_x_sys",
-    commit = "9b800f95dbbc54abff0acf7ee32d88ba4e328c89",
+    commit = "7155702f2d47d94b134229da97195d0130cab001",
     importpath = "golang.org/x/sys",
 )
 
@@ -363,19 +363,19 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_conn_security",
-    commit = "b7192598fc6d96e4aa1d6a565387cd17ab667987",
+    commit = "401ec034f8aaf5782b0dec08c56f1d17b9b1ed34",
     importpath = "github.com/libp2p/go-conn-security",
 )
 
 go_repository(
     name = "com_github_libp2p_go_conn_security_multistream",
-    commit = "578125a681eee24cac960d84827db34541e3f707",
+    commit = "cc89dcc3eedb3115ac0bc5284258eed12f7b990c",
     importpath = "github.com/libp2p/go-conn-security-multistream",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_circuit",
-    commit = "16eb677aaa62fd2e5e6d73d66388f8ac38bd6388",
+    commit = "7983c3631e4532913a7780cb88cb5217cdc00f95",
     importpath = "github.com/libp2p/go-libp2p-circuit",
 )
 
@@ -388,19 +388,19 @@ go_repository(
 go_repository(
     name = "com_github_libp2p_go_libp2p_secio",
     build_file_proto_mode = "disable_global",
-    commit = "8f95e95b9fedc69b1367362a14f1ad3b5bd5bd46",
+    commit = "6af448ede395fc4a48467f78a0f67a40cf4071ee",
     importpath = "github.com/libp2p/go-libp2p-secio",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_transport_upgrader",
-    commit = "8dde02b5e75342c09725bc601cf28e9e98f920c7",
+    commit = "e78edd6288169a5c4a83aef78dd1705dd17892c8",
     importpath = "github.com/libp2p/go-libp2p-transport-upgrader",
 )
 
 go_repository(
     name = "com_github_libp2p_go_mplex",
-    commit = "0ef5fed5ba589e7e8776c274510cfe0d806bac9c",
+    commit = "f6e0e0f222d6bcd9638a5ca0ccce45fa8ce7a274",
     importpath = "github.com/libp2p/go-mplex",
 )
 
@@ -412,13 +412,13 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_reuseport",
-    commit = "dd0c37d7767bc38280bd9813145b65f8bd560629",
+    commit = "8cfd5f2973c8e2476813120b9a516d9a82eb7c7a",
     importpath = "github.com/libp2p/go-reuseport",
 )
 
 go_repository(
     name = "com_github_libp2p_go_reuseport_transport",
-    commit = "58ea7103ffb4b5eb248c4421e60fdb30e9a56dad",
+    commit = "a7633860456a881830bde6a33d0722a4c457a61c",
     importpath = "github.com/libp2p/go-reuseport-transport",
 )
 
@@ -430,19 +430,19 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_tcp_transport",
-    commit = "4a25127ad66b71ae4c91f1f42205b2ce679dd926",
+    commit = "e5f699ed1abe3c4689510b66bc810faba000dd6b",
     importpath = "github.com/libp2p/go-tcp-transport",
 )
 
 go_repository(
     name = "com_github_libp2p_go_ws_transport",
-    commit = "246ec4b8bd9a5a539827eca50a6e6d4ce50bb056",
+    commit = "5babbaedef1ce4f082d4d4fc3b6b27eeabb64cdb",
     importpath = "github.com/libp2p/go-ws-transport",
 )
 
 go_repository(
     name = "com_github_whyrusleeping_go_smux_multiplex",
-    commit = "2b855d4f3a3051b0133f7783bffe06e4b7833d1e",
+    commit = "c9680d872b8e73a2fc8d9bba3eacabf1e8add80d",
     importpath = "github.com/whyrusleeping/go-smux-multiplex",
 )
 
@@ -467,7 +467,7 @@ go_repository(
 go_repository(
     name = "com_github_libp2p_go_libp2p_kad_dht",
     build_file_proto_mode = "disable_global",
-    commit = "ee77252da00fc7ea9bc3ba309d63cff1c13555be",
+    commit = "b579e0352c7cc727d16d3df1bea6681fc27d8108",
     importpath = "github.com/libp2p/go-libp2p-kad-dht",
 )
 
@@ -486,13 +486,13 @@ go_repository(
 go_repository(
     name = "com_github_libp2p_go_libp2p_record",
     build_file_proto_mode = "disable_global",
-    commit = "56beff422ba25f782821152ce9a2aa4c15712938",
+    commit = "237ab9e10af172232eedad9e63ea8983c50859b1",
     importpath = "github.com/libp2p/go-libp2p-record",
 )
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_routing",
-    commit = "c568217bd16dbdb16aaa3064f5d1f2dfa224b589",
+    commit = "76077861eb4ae107b4366acc1a1152b8e15d4300",
     importpath = "github.com/libp2p/go-libp2p-routing",
 )
 
@@ -516,7 +516,7 @@ go_repository(
 
 go_repository(
     name = "com_github_ipfs_go_cid",
-    commit = "c9e99b39dba9c9d415e033d73e127121c527c8f8",
+    commit = "033594dcd6201e8e8628659c8d584bb800d1734c",
     importpath = "github.com/ipfs/go-cid",
 )
 
@@ -534,7 +534,7 @@ go_repository(
 
 go_repository(
     name = "com_github_libp2p_go_libp2p_kbucket",
-    commit = "6ac78c66a92e82b828ecaa49e86445ba081446d1",
+    commit = "b181991db757142b92d913a2f93ea3ee92288aad",
     importpath = "github.com/libp2p/go-libp2p-kbucket",
 )
 
@@ -554,4 +554,82 @@ go_repository(
     name = "com_github_ipfs_go_ipfs_util",
     commit = "10d786c5ed859afd22223df76a89bf57b24b2ee1",
     importpath = "github.com/ipfs/go-ipfs-util",
+)
+
+go_repository(
+    name = "com_github_prometheus_client_golang",
+    commit = "abad2d1bd44235a26707c172eab6bca5bf2dbad3",
+    importpath = "github.com/prometheus/client_golang",
+)
+
+go_repository(
+    name = "com_github_prometheus_common",
+    commit = "7e9e6cabbd393fc208072eedef99188d0ce788b6",
+    importpath = "github.com/prometheus/common",
+)
+
+go_repository(
+    name = "com_github_prestonvanloon_libp2p_chat",
+    commit = "5d013f36d11e3fc9f4ca326d4bf65e1f5c233bbd",
+    importpath = "github.com/prestonvanloon/libp2p-chat",
+)
+
+go_repository(
+    name = "com_github_prometheus_client_model",
+    commit = "5c3871d89910bfb32f5fcab2aa4b9ec68e65a99f",
+    importpath = "github.com/prometheus/client_model",
+)
+
+go_repository(
+    name = "com_github_prometheus_procfs",
+    commit = "185b4288413d2a0dd0806f78c90dde719829e5ae",
+    importpath = "github.com/prometheus/procfs",
+)
+
+go_repository(
+    name = "com_github_beorn7_perks",
+    commit = "3a771d992973f24aa725d07868b467d1ddfceafb",
+    importpath = "github.com/beorn7/perks",
+)
+
+go_repository(
+    name = "com_github_golang_protobuf",
+    commit = "75dceb112b174be156fa9952e66d3e99945572b4",
+    importpath = "github.com/golang/protobuf",
+)
+
+go_repository(
+    name = "com_github_matttproud_golang_protobuf_extensions",
+    commit = "c12348ce28de40eed0136aa2b644d0ee0650e56c",
+    importpath = "github.com/matttproud/golang_protobuf_extensions",
+)
+
+go_repository(
+    name = "com_github_libp2p_go_libp2p_discovery",
+    commit = "a35c2b4e8fa0b65864648bfd260cf23acfe9b0b2",
+    importpath = "github.com/libp2p/go-libp2p-discovery",
+)
+
+go_repository(
+    name = "com_github_libp2p_go_libp2p_autonat",
+    commit = "e37e937c770fecddf7860a2a0f24ada9dbbd003d",
+    importpath = "github.com/libp2p/go-libp2p-autonat",
+)
+
+go_repository(
+    name = "com_github_pkg_errors",
+    commit = "059132a15dd08d6704c67711dae0cf35ab991756",
+    importpath = "github.com/pkg/errors",
+)
+
+go_repository(
+    name = "com_github_uber_jaeger_client_go",
+    commit = "713fb4b2e160d92f92dbeb95369bd73ddbd81d11",
+    importpath = "github.com/uber/jaeger-client-go",
+)
+
+go_repository(
+    name = "com_github_uber_jaeger_lib",
+    commit = "1fc5c315e03c871d98a3df762234414d185115d7",
+    importpath = "github.com/uber/jaeger-lib",
 )

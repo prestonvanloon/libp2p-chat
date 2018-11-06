@@ -31,9 +31,12 @@ package main
 import (
 	"bufio"
 	"context"
+	"crypto/rand"
 	"flag"
 	"fmt"
+	"io"
 	"log"
+	mrand "math/rand"
 	"os"
 	"time"
 
@@ -50,6 +53,7 @@ import (
 	"github.com/libp2p/go-libp2p-peerstore"
 	rhost "github.com/libp2p/go-libp2p/p2p/host/routed"
 	"github.com/multiformats/go-multiaddr"
+	"github.com/prestonvanloon/libp2p-chat/common"
 	"github.com/prestonvanloon/libp2p-chat/utils"
 )
 
@@ -61,7 +65,7 @@ func handleStream(s net.Stream) {
 	log.Printf("Got a new stream from %s via %s", s.Conn().RemotePeer().Pretty(), s.Conn().RemoteMultiaddr().String())
 
 	// Create a buffer stream for non blocking read and write.
-	rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
+	rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
 
 	go readData(rw)
 	go writeData(rw)
@@ -112,6 +116,7 @@ func writeData(rw *bufio.ReadWriter) {
 		rw.WriteString(fmt.Sprintf("%s\n", sendData))
 		rw.Flush()
 	}
+
 }
 
 func main() {
@@ -167,7 +172,6 @@ func main() {
 		libp2p.AddrsFactory(addRelayAddrs(*relay, true /*relayOnly*/)),
 	)
 
-	kadDht, err := dht.New(ctx, host)
 	if err != nil {
 		panic(err)
 	}
@@ -242,9 +246,6 @@ func main() {
 		fmt.Printf("Run './chat -d /ip4/127.0.0.1/tcp/%v/p2p/%s' on another console.\n", port, h.ID().Pretty())
 		fmt.Println("You can replace 127.0.0.1 with public IP as well.")
 		fmt.Printf("\nWaiting for incoming connection\n\n")
-
-		// Hang forever
-		<-make(chan struct{})
 	} else {
 		fmt.Println("This node's multiaddresses:")
 		for _, la := range h.Addrs() {
@@ -277,10 +278,8 @@ func main() {
 		h.Peerstore().AddAddrs(info.ID, info.Addrs, peerstore.PermanentAddrTTL)
 
 		startStreamWithPeer(h, info.ID)
-
-		// Hang forever.
-		select {}
 	}
+	common.ExportMetrics("github.com/prestonvanloon/libp2p-chat/chat")
 }
 
 func startStreamWithPeer(h host.Host, pid peer.ID) {

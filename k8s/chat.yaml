@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         name: chat
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
     spec:
       containers:
       - name: chat
@@ -20,3 +23,6 @@ spec:
           - "-relay=/ip4/192.168.99.100/tcp/30101/p2p/QmXmXAPKiT7pDpkfRTupPjojutAPwyunwZaVKBPpoKUNMr"
           - "-tell_time"
           - "-v"
+        ports:
+        - name: metrics
+          containerPort: 9090

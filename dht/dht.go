@@ -12,6 +12,7 @@ import (
 	crypto "github.com/libp2p/go-libp2p-crypto"
 	kaddht "github.com/libp2p/go-libp2p-kad-dht"
 	ma "github.com/multiformats/go-multiaddr"
+	common "github.com/prestonvanloon/libp2p-chat/common"
 )
 
 func init() {
@@ -64,9 +65,7 @@ func main() {
 
 	fmt.Printf("DHT node running: /ip4/0.0.0.0/tcp/%v/p2p/%s\n", 4001, host.ID().Pretty())
 
-	// TODO: Enable monitoring metrics
 	// TODO: Log peer connections?
 
-	// Blocking wait forever.
-	select {}
+	common.ExportMetrics("github.com/prestonvanloon/libp2p-chat/dht")
 }

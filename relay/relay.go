@@ -10,6 +10,7 @@ import (
 	circuit "github.com/libp2p/go-libp2p-circuit"
 	crypto "github.com/libp2p/go-libp2p-crypto"
 	multiaddr "github.com/multiformats/go-multiaddr"
+	common "github.com/prestonvanloon/libp2p-chat/common"
 )
 
 var (
@@ -55,6 +56,5 @@ func main() {
 
 	fmt.Printf("Relay available: /ip4/0.0.0.0/tcp/%v/p2p/%s\n", port, h.ID().Pretty())
 
-	// Hang forever.
-	select {}
+	common.ExportMetrics("github.com/prestonvanloon/libp2p-chat/relay")
 }

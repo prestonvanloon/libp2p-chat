@@ -20,6 +20,9 @@ spec:
     metadata:
       labels:
         name: relay
+      annotations:  
+        prometheus.io/scrape: "true"  
+        prometheus.io/port: "9090"
     spec:
       containers:
         - name: relay
@@ -28,6 +31,8 @@ spec:
           - containerPort: 6660
             name: relay
             protocol: TCP
+          - name: metrics
+            containerPort: 9090
           args:
             - "--private=$(PRIVATE_KEY)"
             - "--v"

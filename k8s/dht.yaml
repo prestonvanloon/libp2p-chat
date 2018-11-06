@@ -20,6 +20,9 @@ spec:
     metadata:
       labels:
         name: dht
+      annotations:  
+        prometheus.io/scrape: "true"  
+        prometheus.io/port: "9090"
     spec:
       containers:
         - name: dht
@@ -29,6 +32,8 @@ spec:
             name: dht
             protocol: TCP
             hostPort: 5000
+          - name: metrics
+            containerPort: 9090
           args:
             - "--private=$(PRIVATE_KEY)"
           env:
