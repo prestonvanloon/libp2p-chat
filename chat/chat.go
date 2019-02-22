@@ -246,6 +246,7 @@ func main() {
 		fmt.Printf("Run './chat -d /ip4/127.0.0.1/tcp/%v/p2p/%s' on another console.\n", port, h.ID().Pretty())
 		fmt.Println("You can replace 127.0.0.1 with public IP as well.")
 		fmt.Printf("\nWaiting for incoming connection\n\n")
+		fmt.Printf("Find me via %v", h.Addrs())
 	} else {
 		fmt.Println("This node's multiaddresses:")
 		for _, la := range h.Addrs() {
