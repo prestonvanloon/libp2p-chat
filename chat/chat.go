@@ -40,11 +40,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/libp2p/go-libp2p"
-
+	ggio "github.com/gogo/protobuf/io"
 	ds "github.com/ipfs/go-datastore"
 	dsync "github.com/ipfs/go-datastore/sync"
 	logger "github.com/ipfs/go-log"
+	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-crypto"
 	host "github.com/libp2p/go-libp2p-host"
 	kaddht "github.com/libp2p/go-libp2p-kad-dht"
